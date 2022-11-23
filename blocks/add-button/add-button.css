@@ -1,0 +1,30 @@
+.add-button {
+  width: 150px;
+  height: 50px;  
+  background: transparent;  
+  background-image: url('../../images/add-button.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+  border: solid white 2px;
+  box-sizing: border-box;
+  position: absolute;
+  right: 0;
+  display: grid;
+  justify-items: center;
+  align-items: center;
+  transition: .3s ease;
+}
+
+.add-button:hover {
+  opacity: .6;
+}
+
+@media screen and (max-width: 900px) {
+  .add-button {
+    position: relative;
+    width: 100%;
+    right: none;
+    margin-top: 36px;
+  }  
+        
+}
