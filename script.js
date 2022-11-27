@@ -30,7 +30,7 @@ function formSubmitHandler (evt) {
 const popupForm = document.querySelector('#popup');
 popupForm.addEventListener('submit', formSubmitHandler);
 
-let likeButton1 = document.querySelectorAll('#like_1');
+let likeButton1 = document.querySelector('#like_1');
 let likeButton2 = document.querySelector('#like_2');
 let likeButton3 = document.querySelector('#like_3');
 let likeButton4 = document.querySelector('#like_4');
