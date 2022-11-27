@@ -4,6 +4,7 @@
   background-position: center;
   background-size: cover;
   position: absolute;
+  border: none;
   top: -40px;
   right: -40px;
   transition: .5s ease;
