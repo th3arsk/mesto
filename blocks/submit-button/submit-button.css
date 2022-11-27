@@ -1,13 +1,17 @@
 .submit-button {
   background-color: #000;
   color: #fff;
-  margin-top: 48px;
+  margin: 18px 36px 37px;
+  width: 358px;
   height: 50px;
-  display: grid;
   border-radius: 2px;
   align-content: center;
   justify-content: center;
   transition: .5 ease;
+  color: #fff;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 22px;
 }
 
 .submit-button:hover {

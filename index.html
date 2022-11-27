@@ -8,7 +8,7 @@
 </head>
 <body class="page">
   <header class="header">
-    <img class="header__logo" src="./images/header__logo.svg">
+    <img class="header__logo" src="./images/header__logo.svg" alt="Логотип">
   </header>
   <div class="content">
     <section class="profile">
@@ -24,46 +24,44 @@
       <div class="element">
         <img class="element__picture" src="./images/element__karachevsk.jpg" alt="Фото Карачевск">
         <h2 class="element__name">Карачаевск</h2>
-        <button class="like-button"></button>
+        <button class="like-button" id="like_1"></button>
       </div>
       <div class="element">
         <img class="element__picture" src="./images/element__elbrus.jpg" alt="Фото Эльбрус">
         <h2 class="element__name">Гора Эльбрус</h2>
-        <button class="like-button"></button>
+        <button class="like-button" id="like_2"></button>
       </div>
       <div class="element">
         <img class="element__picture" src="./images/element__dombai.jpg" alt="Фото Домбаи">
         <h2 class="element__name">Домбай</h2>
-        <button class="like-button"></button>
+        <button class="like-button" id="like_3"></button>
       </div>
       <div class="element">
         <img class="element__picture" src="./images/element__karachevsk.jpg" alt="Фото Карачевск">
         <h2 class="element__name">Карачаевск</h2>
-        <button class="like-button"></button>
+        <button class="like-button" id="like_4"></button>
       </div>
       <div class="element">
         <img class="element__picture" src="./images/element__elbrus.jpg" alt="Фото Эльбрус">
         <h2 class="element__name">Гора Эльбрус</h2>
-        <button class="like-button"></button>
+        <button class="like-button" id="like_5"></button>
       </div>
       <div class="element">
         <img class="element__picture" src="./images/element__dombai.jpg" alt="Фото Домбаи">
         <h2 class="element__name">Домбай</h2>
-        <button class="like-button"></button>
-      </div>
+        <button class="like-button" id="like_6"></button>
+      </div>  
     </section>
     <section class="popup">
-      <form class="popup__container">
+      <form class="popup__container" id="popup">
         <p class="popup__heading">Редактировать профиль</p>
         <fieldset class="popup__fieldset">
-          <input class="popup__input" type="text" placeholder="Жак-Ив Кусто" value="">
+          <input class="popup__input" type="text" placeholder="Жак-Ив Кусто" id="name">
         </fieldset>
         <fieldset class="popup__fieldset">
-          <input class="popup__input" type="text" placeholder="Исследователь океана" value="">
+          <input class="popup__input" type="text" placeholder="Исследователь океана" id="job">
         </fieldset>
-        <div class="submit-button">
-          <p class="submit-button__text">Сохранить</p>
-        </div>
+        <button class="submit-button" type="submit">Сохранить</button>
         <button class="close-button"></button>
       </form>
     </section>
