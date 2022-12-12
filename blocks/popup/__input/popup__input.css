@@ -3,5 +3,5 @@
   border-bottom: 1px solid #00000020;
   padding-bottom: 13px;
   margin: 0 0 30px;
-  width: 100%;
+  width: calc(100% - 4px);
 }
