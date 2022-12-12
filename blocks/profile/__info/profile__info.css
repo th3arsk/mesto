@@ -6,4 +6,11 @@
   color: #fff;
   grid-template-columns: repeat(2 minmax(min-content));
   grid-template-rows: 1fr 1fr;
+  max-width: 60%;
+}
+
+@media screen and (max-width: 900px) {
+  .profile__info {
+    max-width: 90%;
+  }
 }
