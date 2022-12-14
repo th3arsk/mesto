@@ -8,12 +8,6 @@ function openForm() {
 
 editButton.addEventListener('click', openForm);
 
-function closeForm() {
-  form.classList.remove('popup_opened');
-}
-
-closeButton.addEventListener('click', formSubmitHandler);
-
 function formSubmitHandler (evt) {
     evt.preventDefault();
     let nameInput = document.querySelector('#name');
@@ -29,6 +23,12 @@ function formSubmitHandler (evt) {
 
 const popupForm = document.querySelector('#popup');
 popupForm.addEventListener('submit', formSubmitHandler);
+
+function closeForm() {
+  form.classList.remove('popup_opened');
+}
+
+closeButton.addEventListener('click', closeForm  && formSubmitHandler);
 
 //let likeButton1 = document.querySelector('#like_1');
 //let likeButton2 = document.querySelector('#like_2');
