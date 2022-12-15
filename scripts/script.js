@@ -1,22 +1,24 @@
 const form = document.querySelector('.popup');
 const editButton = document.querySelector('.edit-button');
 const closeButton = document.querySelector('.close-button');
+let nameInput = document.querySelector('#name');
+let jobInput = document.querySelector('#job');
+let profileNameElement = document.querySelector('.profile__name');
+let profileJobElement = document.querySelector('.profile__specialisation');
 
 function openForm() {
   form.classList.add('popup_opened');
+  nameInput.value = profileNameElement.textContent;
+  jobInput.value = profileJobElement.textContent;
 }
 
 editButton.addEventListener('click', openForm);
 
 function formSubmitHandler (evt) {
     evt.preventDefault();
-    let nameInput = document.querySelector('#name');
     let nameValue = nameInput.value;
-    let profileNameElement = document.querySelector('.profile__name');
     profileNameElement.textContent = nameValue;  
-    let jobInput = document.querySelector('#job');
     let jobValue = jobInput.value;
-    let profileJobElement = document.querySelector('.profile__specialisation');
     profileJobElement.textContent = jobValue;  
     closeForm();
 }
@@ -28,7 +30,7 @@ function closeForm() {
   form.classList.remove('popup_opened');
 }
 
-closeButton.addEventListener('click', closeForm  && formSubmitHandler);
+closeButton.addEventListener('click', closeForm);
 
 //let likeButton1 = document.querySelector('#like_1');
 //let likeButton2 = document.querySelector('#like_2');
