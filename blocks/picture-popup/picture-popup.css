@@ -1,4 +1,4 @@
-.popup {
+.picture-popup {
   background-color: #00000050;
   width: 100%;
   height: 100%;
@@ -6,8 +6,8 @@
   top: 0;
   left: 0;
   z-index: 2;
-  visibility: hidden;
-  opacity: .5;
   transition: visibility .3s, opacity .3s ease-in;
+  display: grid;
+  align-items: center;
+  justify-items: center;
 }
-

@@ -10,4 +10,5 @@
   grid-template-areas: 
   'image image'
   'name like';
+  position: relative;
 }
