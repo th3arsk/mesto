@@ -71,86 +71,77 @@ const initialCards = [
   }
 ];
 
-function like () {
-  let likes = document.querySelectorAll('.like-button');
-  likes.forEach(like => like.addEventListener('click', function () {
+const cardContainer = document.querySelector('.elements');
+
+function like(element) {
+  const like = element.querySelector('.like-button');
+  like.addEventListener('click', function() {
     like.classList.toggle('like-button_active');
-  }));
+  });
 }
 
-function createCard (image, name) {
-  const card = `
-    <div class="element">
-      <img class="element__picture" src="${image}" alt="Картинка">
-      <h2 class="element__name">${name}</h2>
-      <button class="like-button" type="button"></button>
-      <button class="delete-button" type="button"></button>
-    </div>
-    `
+function deleteCard (element) {
+  let deleteButton = element.querySelector('.delete-button');
+  let deleteItem = deleteButton.closest('.element');
+  deleteButton.addEventListener('click', () => {
+    deleteItem.remove();
+  });
+}
+
+const cardTemplate = document
+.querySelector('.card-template')
+.content;
+
+function createCard(object) {
+  const card = cardTemplate.cloneNode(true);
+  const cardName = card.querySelector('.element__name');
+  const cardPicture = card.querySelector('.element__picture');
+
+  cardName.textContent = object.name;
+  cardPicture.src = object.link;
+
+  deleteCard(card);
+  like(card);
+  
   return card;
 }
 
-//const deleteButton = element.querySelector('.delete-button');
-//const deleteCard = () => {
-//  element.remove();
- //};
- //deleteButton.addEventListener('click', deleteCard());
-
-let cardsElements = document.querySelector('.elements');
-function createCardImage () {
+function renderCards() {
   initialCards.forEach(item => {
-    const cardContent = createCard(item.link, item.name);
-    cardsElements.innerHTML += cardContent;
-  });
-
-  like ();
+    const cardHtml = createCard(item);
+    cardContainer.append(cardHtml);
+  })
 }
-createCardImage ();
+renderCards();
 
-
-let elements = document.querySelector('.elements');
-let cards = document.querySelector('.element');
-
-let cardName = document.querySelector('#card-name');
-let imageLink = document.querySelector('#image-link');
-
-function createNewCard (evt) {
+function createNewCard(evt) {
   evt.preventDefault();
-  cardsElements.insertAdjacentHTML(`afterbegin`,`
-  <div class="element">
-    <img class="element__picture" src="${imageLink.value}" alt="Картинка">
-    <h2 class="element__name">${cardName.value}</h2>
-    <button class="like-button" type="button"></button>
-    <button class="delete-button" type="button"></button>
-  </div>`) ;
-    like();
-    closeForm();
+  const nameValue = document.querySelector('#card-name');
+  const linkValue = document.querySelector('#image-link');
+
+  const newCardData = {name: nameValue.value, link: linkValue.value};
+  const newCard = createCard(newCardData);
+  cardContainer.prepend(newCard);
+
+  closeForm();
+  deleteCard(newCard);
+  like(newCard);
 }
 
 const createButton = document.querySelector('#add-popup');
 createButton.addEventListener('submit', createNewCard);
 
-let picture = document.querySelectorAll('.element__picture');
+const pictureTemplate = document
+.querySelector('.picture-template')
+.content;
 
-function createImage () {
-  const image = `
-  <section class="picture-popup">
-    <div class="picture-popup__container">
-      <img class="picture-popup__image" src="https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg" alt="Картинка">
-      <p class="picture-popup__caption">Подпись Картинка</p>
-      <button class="close-button" type="button"></button>
-    </div>
-  </section>`
+const page = document.querySelector('page')
+function createPictureWindow(element) {
+  const picturePopup = pictureTemplate.cloneNode(true);
+  const picture = picturePopup.querySelector('picture-popup__image');
+  const caption = picturePopup.querySelector('picture-popup__caption');
 
-  return image;
+  picture.src = 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg';
+  caption.textContent = 'Подпись';
 }
-
-function imagePopup () {
-  const image = createImage();
-  document.innerHTML = image;
-}
-imagePopup ();
-
-
-  
 

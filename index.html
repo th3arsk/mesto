@@ -22,6 +22,14 @@
         <button class="add-button" type="button"></button>
       </section>
       <section class="elements">
+        <template class="card-template">
+          <div class="element">
+            <img class="element__picture" src="" alt="Картинка">
+            <h2 class="element__name"></h2>
+            <button class="like-button" type="button"></button>
+            <button class="delete-button" type="button"></button>
+          </div>
+        </template>
       </section>
       <section class="popup">
         <div class="popup__container popup__container_closed" id="edit-popup">
@@ -47,6 +55,15 @@
           </form>
         </div>
       </section>
+      <template class="picture-template">
+        <div class="picture-popup">
+          <div class="picture-popup__container">
+            <img class="picture-popup__image" src="" alt="Картинка">
+            <p class="picture-popup__caption"></p>
+            <button class="close-button" type="button"></button>
+          </div>
+        </div>
+      </template>
     </div>
   </main>
   <footer class="footer">
