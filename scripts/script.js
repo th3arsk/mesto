@@ -28,6 +28,7 @@ popupForm.addEventListener('submit', formSubmitHandler);
 
 function closeForm() {
   form.classList.remove('popup_opened');
+  picturePopup.classList.remove('picture-popup_opened');
   let popupForm = document.querySelectorAll('.popup__container');
   popupForm.forEach(element => element.classList.add('popup__container_closed'));
 }
@@ -72,6 +73,22 @@ const initialCards = [
 ];
 
 const cardContainer = document.querySelector('.elements');
+const picturePopup = document.querySelector('.picture-popup');
+
+function openPicture (element) {
+  let picture = element.querySelector('.element__picture');
+  let name = element.querySelector('.element__name');
+
+  picture.addEventListener('click', function picturePopupWindow() {
+  
+    const caption = document.querySelector('.picture-popup__caption');
+    picturePopup.classList.add('picture-popup_opened');
+    const image = document.querySelector('.picture-popup__image');
+    
+    image.src = picture.src;
+    caption.textContent = name.textContent;
+  })
+}
 
 function like(element) {
   const like = element.querySelector('.like-button');
@@ -88,6 +105,11 @@ function deleteCard (element) {
   });
 }
 
+function openPicturePopup (element) {
+  const cardPicture = element.querySelector('.element__picture');
+  cardPicture.addEventListener('click', picturePopupWindow);
+}
+
 const cardTemplate = document
 .querySelector('.card-template')
 .content;
@@ -100,6 +122,7 @@ function createCard(object) {
   cardName.textContent = object.name;
   cardPicture.src = object.link;
 
+  openPicture(card);
   deleteCard(card);
   like(card);
   
@@ -124,6 +147,7 @@ function createNewCard(evt) {
   cardContainer.prepend(newCard);
 
   closeForm();
+  openPicture(newCard);
   deleteCard(newCard);
   like(newCard);
 }
@@ -131,17 +155,6 @@ function createNewCard(evt) {
 const createButton = document.querySelector('#add-popup');
 createButton.addEventListener('submit', createNewCard);
 
-const pictureTemplate = document
-.querySelector('.picture-template')
-.content;
 
-const page = document.querySelector('page')
-function createPictureWindow(element) {
-  const picturePopup = pictureTemplate.cloneNode(true);
-  const picture = picturePopup.querySelector('picture-popup__image');
-  const caption = picturePopup.querySelector('picture-popup__caption');
 
-  picture.src = 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg';
-  caption.textContent = 'Подпись';
-}
 

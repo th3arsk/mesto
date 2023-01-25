@@ -48,3 +48,4 @@
 @import url(../blocks/picture-popup/__image/picture-popup__image.css);
 @import url(../blocks/picture-popup/__container/picture-popup__container.css);
 @import url(../blocks/picture-popup/__caption/picture-popup__caption.css);
+@import url(../blocks/picture-popup/_opened/picture-popup_opened.css);

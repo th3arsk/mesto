@@ -6,8 +6,10 @@
   top: 0;
   left: 0;
   z-index: 2;
-  transition: visibility .3s, opacity .3s ease-in;
   display: grid;
   align-items: center;
   justify-items: center;
+  visibility: hidden;
+  opacity: 0;
+  transition: visibility .3s, opacity .3s ease-in;
 }
