@@ -17,9 +17,9 @@
         <div class="profile__info">
           <h1 class="profile__name">Жак-Ив Кусто</h1>
           <p class="profile__specialisation">Исследователь океана</p>
-          <button class="edit-button" type="button"></button>
+          <button class="profile__edit-button" type="button"></button>
         </div>
-        <button class="add-button" type="button"></button>
+        <button class="profile__add-button" type="button"></button>
       </section>
       <section class="elements">
         <template class="card-template">
@@ -31,37 +31,37 @@
           </div>
         </template>
       </section>
-      <section class="popup">
-        <div class="popup__container popup__container_closed" id="edit-popup">
-          <form name="edit-profile">
+      <section class="popups">
+        <div class="popup profile-popup">
+          <form name="edit-profile" class="popup__form">
             <p class="popup__heading">Редактировать профиль</p>
             <fieldset class="popup__fieldset">
               <input class="popup__input" type="text" value="" id="name">
               <input class="popup__input" type="text" value="" id="job">
             </fieldset>
-            <button class="submit-button" type="submit">Сохранить</button>
-            <button class="close-button" type="button"></button>
+            <button class="popup__submit-button" type="submit">Сохранить</button>
+            <button class="popup__close-button" type="button"></button>
           </form>
         </div>
-        <div class="popup__container popup__container_closed" id="add-popup">
-          <form name="add-card">
+        <div class="popup add-popup">
+          <form name="add-card" class="popup__form">
             <p class="popup__heading">Новое место</p>
             <fieldset class="popup__fieldset">
               <input class="popup__input" type="text" placeholder="Название" value="" id="card-name">
               <input class="popup__input" type="text" placeholder="Ссылка на картинку" value="" id="image-link">
             </fieldset>
-            <button class="submit-button" type="submit">Создать</button>
-            <button class="close-button" type="button"></button>
+            <button class="popup__submit-button" type="submit">Создать</button>
+            <button class="popup__close-button" type="button"></button>
           </form>
         </div>
+        <div class="popup picture-popup">
+          <div class="picture-popup__container">
+            <img class="picture-popup__image" src="link" alt="Картинка">
+            <p class="picture-popup__caption">Подпись</p>
+            <button class="popup__close-button" type="button"></button>
+          </div>
+        </div>  
       </section>
-      <section class="picture-popup">
-        <div class="picture-popup__container">
-          <img class="picture-popup__image" src="link" alt="Картинка">
-          <p class="picture-popup__caption">Подпись</p>
-          <button class="close-button" type="button"></button>
-        </div>
-      </section>  
     </div>
   </main>
   <footer class="footer">

@@ -1,0 +1,6 @@
+.popups_active {
+    visibility: visible;
+    opacity: 1;
+    transition: visibility .0s, opacity .3s ease-in-out;
+    display: grid;
+  }

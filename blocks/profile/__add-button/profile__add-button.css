@@ -1,8 +1,8 @@
-.add-button {
+.profile__add-button {
   width: 150px;
   height: 50px;
   background: transparent;
-  background-image: url('../../images/add-button.svg');
+  background-image: url('../../../images/add-button.svg');
   background-repeat: no-repeat;
   background-position: center;
   border: solid white 2px;
@@ -12,12 +12,12 @@
   border-radius: 2px;
 }
 
-.add-button:hover {
+.profile__add-button:hover {
   opacity: .6;
 }
 
 @media screen and (max-width: 900px) {
-  .add-button {
+  .profile__add-button {
     background-size: 16px 16px;
     width: 100%;
     margin: 36px 0 0;
