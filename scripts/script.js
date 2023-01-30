@@ -1,5 +1,5 @@
 const popups = document.querySelector('.popups');
-const closeButton = document.querySelectorAll('.popup__close-button');
+const closeButtons = document.querySelectorAll('.popup__close-button');
 const nameInput = document.querySelector('#name');
 const jobInput = document.querySelector('#job');
 const profileNameElement = document.querySelector('.profile__name');
@@ -36,7 +36,7 @@ function closePopup(popup) {
   popup.classList.remove('popup_opened');
 }
 
-closeButton.forEach(button => {
+closeButtons.forEach(button => {
   const popup = button.closest('.popup');
   button.addEventListener('click', function() {
     closePopup(popup);
@@ -76,8 +76,8 @@ const caption = document.querySelector('.picture-popup__caption');
 const image = document.querySelector('.picture-popup__image');
 
 function openPicture (element) {
-  let picture = element.querySelector('.element__picture');
-  let name = element.querySelector('.element__name');
+  const picture = element.querySelector('.element__picture');
+  const name = element.querySelector('.element__name');
 
   picture.addEventListener('click', function() {
   
@@ -97,8 +97,8 @@ function like(element) {
 }
 
 function deleteCard (element) {
-  let deleteButton = element.querySelector('.delete-button');
-  let deleteItem = deleteButton.closest('.element');
+  const deleteButton = element.querySelector('.delete-button');
+  const deleteItem = deleteButton.closest('.element');
   deleteButton.addEventListener('click', () => {
     deleteItem.remove();
   });
