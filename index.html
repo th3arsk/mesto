@@ -31,42 +31,46 @@
           </div>
         </template>
       </section>
-      <section class="popups">
-        <div class="popup profile-popup">
-          <form name="edit-profile" class="popup__form">
-            <p class="popup__heading">Редактировать профиль</p>
-            <fieldset class="popup__fieldset">
-              <input class="popup__input" type="text" value="" id="name">
-              <input class="popup__input" type="text" value="" id="job">
-            </fieldset>
-            <button class="popup__submit-button" type="submit">Сохранить</button>
-            <button class="popup__close-button" type="button"></button>
-          </form>
+      <section class="popup profile-popup">
+        <form name="editProfile" class="popup__form" novalidate method="post">
+          <p class="popup__heading">Редактировать профиль</p>
+          <fieldset class="popup__fieldset">
+            <input class="popup__input" type="text" id="name" required minlength="2" maxlength="40">
+            <span class="popup__error name-error">Вы пропустили это поле.</span>
+            <input class="popup__input" type="text" id="job" required minlength="2" maxlength="200">
+            <span class="popup__error job-error">Вы пропустили это поле.</span>
+          </fieldset>
+          <button class="popup__button" type="submit">Сохранить</button>
+          <button class="popup__close-button" type="button"></button>
+        </form>
+      </section>  
+      <section class="popup add-popup">
+        <form name="addCard" class="popup__form" novalidate>
+          <p class="popup__heading">Новое место</p>
+          <fieldset class="popup__fieldset">
+            <input class="popup__input" type="text" placeholder="Название" id="card-name" required minlength="2" maxlength="30">
+            <span class="popup__error card-name-error">Вы пропустили это поле.</span>
+            <input class="popup__input" type="url" placeholder="Ссылка на картинку" id="image-link" required>
+            <span class="popup__error image-link-error">Введите адрес сайта.</span>
+          </fieldset>
+          <button class="popup__button popup__button_disabled" type="submit" disabled>Создать</button>
+          <button class="popup__close-button" type="button"></button>
+        </form>
+      </section>  
+      <section class="popup picture-popup">
+        <div class="picture-popup__container">
+          <img class="picture-popup__image" src="link" alt="Картинка">
+          <p class="picture-popup__caption">Подпись</p>
+          <button class="popup__close-button" type="button"></button>
         </div>
-        <div class="popup add-popup">
-          <form name="add-card" class="popup__form">
-            <p class="popup__heading">Новое место</p>
-            <fieldset class="popup__fieldset">
-              <input class="popup__input" type="text" placeholder="Название" value="" id="card-name">
-              <input class="popup__input" type="text" placeholder="Ссылка на картинку" value="" id="image-link">
-            </fieldset>
-            <button class="popup__submit-button" type="submit">Создать</button>
-            <button class="popup__close-button" type="button"></button>
-          </form>
-        </div>
-        <div class="popup picture-popup">
-          <div class="picture-popup__container">
-            <img class="picture-popup__image" src="link" alt="Картинка">
-            <p class="picture-popup__caption">Подпись</p>
-            <button class="popup__close-button" type="button"></button>
-          </div>
-        </div>  
-      </section>
+      </section>    
     </div>
   </main>
   <footer class="footer">
     <p class="footer__copyright">&copy; 2020 Mesto Russia</p>
   </footer>
+  <script src="./scripts/constants.js"></script>
   <script src="./scripts/script.js"></script>
+  <script src="./scripts/validation.js"></script>
 </body>
 </html>
