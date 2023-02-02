@@ -49,5 +49,4 @@ const cardTemplate = document
 const nameValue = document.querySelector('#card-name');
 const linkValue = document.querySelector('#image-link');
 
-const profileForm = document.forms.editProfile;
-const placeForm = document.forms.addCard;
+const addPopupButton = addPopup.querySelector('.popup__button');
