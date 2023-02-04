@@ -23,10 +23,10 @@ profilePopup.addEventListener('submit', handleProfileFormSubmit);
 
 
 function addEscapeListener (evt) {
-    if ((evt.key === 'Escape')) {
-      const popup = document.querySelector('.popup_opened');
-      closePopup(popup);
-    }   
+  if ((evt.key === 'Escape')) {
+    const popup = document.querySelector('.popup_opened');
+    closePopup(popup);
+  }   
 }
 
 function closePopup(popup) {
