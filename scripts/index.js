@@ -125,25 +125,23 @@ closeButtons.forEach(button => {
 function createCard(item) {
   const card = new Card( item, '.card-template');
   const cardElement = card.generateCard();
-  cardContainer.prepend(cardElement);
-
   return cardElement
 }
 
-initialCards.reverse().forEach(dataItem => {
-  createCard(dataItem);
+initialCards.forEach(dataItem => {
+  cardContainer.append(createCard(dataItem));
 });
 
 function createNewCard(evt) {
   evt.preventDefault();
   
   const newData = {name: `${nameValue.value}`, link: `${linkValue.value}`};
-  createCard(newData);
+  cardContainer.prepend(createCard(newData));
   
-  nameValue.value = '';
-  linkValue.value = '';
+  validateAddPopup.disableSubmitButton(addPopupButton);
+  evt.target.reset();
   closePopup(addPopup);
-  validation.disableSubmitButton(addPopupButton);
+  
 }
   
 addPopup.addEventListener('submit', createNewCard);
