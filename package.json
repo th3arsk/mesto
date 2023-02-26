@@ -1,0 +1,11 @@
+{
+  "name": "mesto",
+  "version": "1.0.0",
+  "description": "Проект Место. Сайт об известных местах России, где пользоватеь может авторизоваться и довать свои любимые места.\r В данный учебный проект первый, в котором применём JavaScript.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}

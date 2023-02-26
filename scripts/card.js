@@ -17,34 +17,45 @@ export class Card {
     return cardElement;
   }
  
+  _deleteCard() {
+    this._element.remove(); 
+  }
+
   _setDeleteButton() {
     const buttonDelete = this._element.querySelector('.delete-button');
     buttonDelete.addEventListener('click', () => {
-      this._element.remove(this._element);
+      this._deleteCard();
     });
+  }
+
+  _toggleLike(like) {
+    like.classList.toggle('like-button_active');
   }
 
   _toggleLikeButton() {
     const like = this._element.querySelector('.like-button');
-    like.addEventListener('click', function() {
-      like.classList.toggle('like-button_active');
+    like.addEventListener('click', () => {
+      this._toggleLike(like);
     });
   } 
 
-  _setPictureListener (element) {
-    element.querySelector('.element__picture').addEventListener('click', function() {
- 
-      openPopup(picturePopup);
-      caption.textContent = element.querySelector('.element__name').textContent;
-      image.src = element.querySelector('.element__picture').src
-      image.alt = element.querySelector('.element__picture').alt
+  _handleImageClick() {
+    openPopup(picturePopup);
+    caption.textContent = this._name;
+    image.src = this._link;
+    image.alt = this._name;
+  }
+
+  _setPictureListener () {
+    this._element.querySelector('.element__picture').addEventListener('click', () => {
+      this._handleImageClick();
     })
   }
 
   _setEventListeners () {
     this._setDeleteButton();
     this._toggleLikeButton();
-    this._setPictureListener(this._element);
+    this._setPictureListener();
   }
 
   generateCard() {

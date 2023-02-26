@@ -1,6 +1,6 @@
-import { Card } from "./card.js";
+import { Card } from "./Card.js";
 
-import { formValidator } from "./validate.js"
+import { FormValidator } from "./FormValidator.js"
 
 const validationData = {
   formSelector: '.popup__form',
@@ -56,8 +56,11 @@ const linkValue = document.querySelector('#image-link');
 
 const addPopupButton = addPopup.querySelector('.popup__button');
 
-const validation = new formValidator( validationData, '.popup__form' )
-validation.enableValidation();
+const validateProfilePopup = new FormValidator( validationData, profilePopup )
+validateProfilePopup.enableValidation();
+
+const validateAddPopup = new FormValidator( validationData, addPopup )
+validateAddPopup.enableValidation();
 
 const picturePopup = document.querySelector('.picture-popup');
 const caption = picturePopup.querySelector('.picture-popup__caption');
@@ -119,25 +122,28 @@ closeButtons.forEach(button => {
   closePopupOutArea(popup);
 });
 
-initialCards.forEach(dataItem => {
-  const card = new Card( dataItem, '.card-template');
+function createCard(item) {
+  const card = new Card( item, '.card-template');
   const cardElement = card.generateCard();
-  cardContainer.append(cardElement);
+  cardContainer.prepend(cardElement);
+
+  return cardElement
+}
+
+initialCards.reverse().forEach(dataItem => {
+  createCard(dataItem);
 });
 
 function createNewCard(evt) {
   evt.preventDefault();
   
   const newData = {name: `${nameValue.value}`, link: `${linkValue.value}`};
-  const newCard = new Card( newData, '.card-template' );
-  const newCardElement = newCard.generateCard();
-  cardContainer.prepend(newCardElement);
-  
+  createCard(newData);
   
   nameValue.value = '';
   linkValue.value = '';
   closePopup(addPopup);
-  validation._disableSubmitButton(addPopupButton);
+  validation.disableSubmitButton(addPopupButton);
 }
   
 addPopup.addEventListener('submit', createNewCard);
