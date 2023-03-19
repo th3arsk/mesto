@@ -8,18 +8,18 @@
 </head>
 <body class="page">
   <header class="header">
-    <img class="header__logo" src="./images/header__logo.svg" alt="Логотип">
+    <img class="header__logo" src="<%=require('./images/header__logo.svg')%>" alt="Логотип">
   </header>
   <main>
     <div class="content">
       <section class="profile">
-        <img class="profile__avatar" src="./images/profile__image.jpg" alt="Картинка профиля">
+        <img class="profile__avatar" src="<%=require('./images/profile__image.jpg')%>" alt="Картинка профиля">
         <div class="profile__info">
           <h1 class="profile__name">Жак-Ив Кусто</h1>
           <p class="profile__specialisation">Исследователь океана</p>
-          <button class="profile__edit-button" type="button"></button>
+          <button class="profile__edit-button" type="button" title="Редактировать профиль"></button>
         </div>
-        <button class="profile__add-button" type="button"></button>
+        <button class="profile__add-button" type="button" title="Добавить место"></button>
       </section>
       <section class="elements">
         <template class="card-template">
@@ -41,7 +41,7 @@
             <span class="popup__error job-error">Вы пропустили это поле.</span>
           </fieldset>
           <button class="popup__button" type="submit">Сохранить</button>
-          <button class="popup__close-button" type="button"></button>
+          <button class="popup__close-button" type="button" title="Закрыть"></button>
         </form>
       </section>  
       <section class="popup add-popup">
@@ -54,14 +54,14 @@
             <span class="popup__error image-link-error">Введите адрес сайта.</span>
           </fieldset>
           <button class="popup__button popup__button_disabled" type="submit" disabled>Создать</button>
-          <button class="popup__close-button" type="button"></button>
+          <button class="popup__close-button" type="button" title="Закрыть"></button>
         </form>
       </section>  
       <section class="popup picture-popup">
         <div class="picture-popup__container">
           <img class="picture-popup__image" src="https://" alt="Картинка">
           <p class="picture-popup__caption">Подпись</p>
-          <button class="popup__close-button" type="button"></button>
+          <button class="popup__close-button" type="button" title="Закрыть"></button>
         </div>
       </section>    
     </div>
@@ -69,8 +69,5 @@
   <footer class="footer">
     <p class="footer__copyright">&copy; 2020 Mesto Russia</p>
   </footer>
-  <script type="module" src="./scripts/index.js"></script>
-  <script type="module" src="./scripts/FormValidator.js"></script>
-  <script type="module" src="./scripts/Card.js"></script> 
 </body>
 </html>
