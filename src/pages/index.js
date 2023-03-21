@@ -48,25 +48,31 @@ const validationData = {
   errorClass: 'popup__error_visible'
 };
 
+const placeForm = document.querySelector('.add-popup');
+const profileForm = document.querySelector('.profile-popup')
+
+const cardImage = new PopupWithImage('.picture-popup');
+cardImage.setEventListeners();
+
+function createCard(data) {
+ return new Card({
+    data: data,
+    templateSelector: '.card-template',
+    handleCardClick: () => {
+      cardImage.open(data.name, data.link);
+    }
+  });
+}
+
 const cardList = new Section({
   items: initialCards,
   renderer: (item) => {
-    const card = new Card({
-      data: item,
-      templateSelector: '.card-template',
-      handleCardClick: () => {
-        const cardImage = new PopupWithImage('.picture-popup');
-        cardImage.open(item.name, item.link);
-        cardImage.setEventListeners();
-      }
-    });
-    const cardElement = card.generateCard();
-    return cardElement
+    return createCard(item).generateCard();
   }
-}, cardContainer);
-cardList.addItem();
+}, '.elements');
+cardList.addItem(cardList.renderItems());
 
-const validatePlacePopup = new FormValidator( validationData, '.add-popup' )
+const validatePlacePopup = new FormValidator( validationData, placeForm )
 validatePlacePopup.enableValidation();
 
 const placePopup = new PopupWithForm({
@@ -75,17 +81,10 @@ const placePopup = new PopupWithForm({
     evt.preventDefault();
     const newData = {name: `${nameValue.value}`, link: `${linkValue.value}`};
 
-    const newCard = new Card({
-      data: newData,
-      templateSelector: '.card-template',
-      handleCardClick: () => {
-        const cardImage = new PopupWithImage('.picture-popup');
-        cardImage.open(newData.name, newData.link);
-        cardImage.setEventListeners();
-      }
-    });
+    const newCard = createCard(newData)
     const newCardElement = newCard.generateCard();
     cardContainer.prepend(newCardElement);
+    validatePlacePopup.disableSubmitButton(placeForm.querySelector('.popup__button'));
     
     placePopup.close(); 
   }
@@ -97,7 +96,7 @@ document
 })
 placePopup.setEventListeners();
 
-const validateProfilePopup = new FormValidator( validationData, '.profile-popup' )
+const validateProfilePopup = new FormValidator( validationData, profileForm );
 validateProfilePopup.enableValidation();
 
 const nameInput = document.querySelector('#name');
@@ -129,7 +128,4 @@ document
   jobInput.value = userInfoClass.getUserInfo().job;
 })
 userInfoPopup.setEventListeners();
-
-
-
 

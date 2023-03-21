@@ -4,5 +4,6 @@
   line-height: 15px;
   color: #FF0000;
   display: none;
-  margin: 0 0 15px;
+  margin: 0;
+  position: absolute;
 } 
