@@ -34,8 +34,6 @@ const initialCards = [
   }
 ];
 
-const cardContainer = document.querySelector('.elements');
-
 const nameValue = document.querySelector('#card-name');
 const linkValue = document.querySelector('#image-link');
 
@@ -65,9 +63,9 @@ function createCard(data) {
 }
 
 const cardList = new Section({
-  items: initialCards,
+  items: initialCards.reverse(),
   renderer: (item) => {
-    return createCard(item).generateCard();
+    cardList.addItem(createCard(item).generateCard());
   }
 }, '.elements');
 cardList.addItem(cardList.renderItems());
@@ -81,9 +79,7 @@ const placePopup = new PopupWithForm({
     evt.preventDefault();
     const newData = {name: `${nameValue.value}`, link: `${linkValue.value}`};
 
-    const newCard = createCard(newData)
-    const newCardElement = newCard.generateCard();
-    cardContainer.prepend(newCardElement);
+    cardList.addItem(createCard(newData).generateCard());
     validatePlacePopup.disableSubmitButton(placeForm.querySelector('.popup__button'));
     
     placePopup.close(); 
