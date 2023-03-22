@@ -34,9 +34,6 @@ const initialCards = [
   }
 ];
 
-const nameValue = document.querySelector('#card-name');
-const linkValue = document.querySelector('#image-link');
-
 const validationData = {
   formSelector: '.popup__form',
   inputSelector: '.popup__input',
@@ -53,19 +50,20 @@ const cardImage = new PopupWithImage('.picture-popup');
 cardImage.setEventListeners();
 
 function createCard(data) {
- return new Card({
+ const card = new Card({
     data: data,
     templateSelector: '.card-template',
     handleCardClick: () => {
       cardImage.open(data.name, data.link);
     }
   });
+  return card.generateCard();
 }
 
 const cardList = new Section({
-  items: initialCards.reverse(),
+  items: initialCards,
   renderer: (item) => {
-    cardList.addItem(createCard(item).generateCard());
+    cardList.addItem(createCard(item));
   }
 }, '.elements');
 cardList.addItem(cardList.renderItems());
@@ -75,12 +73,11 @@ validatePlacePopup.enableValidation();
 
 const placePopup = new PopupWithForm({
   popupSelector: '.add-popup',
-  submitFunction: (evt) => {
-    evt.preventDefault();
-    const newData = {name: `${nameValue.value}`, link: `${linkValue.value}`};
+  submitFunction: (data) => {
+    const newData = data;
 
-    cardList.addItem(createCard(newData).generateCard());
-    validatePlacePopup.disableSubmitButton(placeForm.querySelector('.popup__button'));
+    cardList.addItem(createCard(newData));
+    validatePlacePopup.disableSubmitButton();
     
     placePopup.close(); 
   }
@@ -105,12 +102,10 @@ const userInfoClass = new UserInfo({
 
 const userInfoPopup = new PopupWithForm({
   popupSelector: '.profile-popup',
-  submitFunction: (evt) => {
-    evt.preventDefault();
-  
+  submitFunction: (data) => {
     userInfoClass.setUserInfo({
-      name: nameInput.value,
-      job: jobInput.value
+      name: data.name,
+      job: data.link
     })
 
     userInfoPopup.close(); 

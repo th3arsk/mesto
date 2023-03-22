@@ -35,9 +35,9 @@
         <form name="editProfile" class="popup__form" novalidate method="post">
           <p class="popup__heading">Редактировать профиль</p>
           <fieldset class="popup__fieldset">
-            <input class="popup__input" type="text" id="name" required minlength="2" maxlength="40">
+            <input class="popup__input" type="text" id="name" name="name" required minlength="2" maxlength="40">
             <span class="popup__error name-error">Вы пропустили это поле.</span>
-            <input class="popup__input" type="text" id="job" required minlength="2" maxlength="200">
+            <input class="popup__input" type="text" id="job" name="link" required minlength="2" maxlength="200">
             <span class="popup__error job-error">Вы пропустили это поле.</span>
           </fieldset>
           <button class="popup__button" type="submit">Сохранить</button>
@@ -48,9 +48,9 @@
         <form name="addCard" class="popup__form" novalidate>
           <p class="popup__heading">Новое место</p>
           <fieldset class="popup__fieldset">
-            <input class="popup__input" type="text" placeholder="Название" id="card-name" minlength="2" maxlength="30" required>
+            <input class="popup__input" type="text" placeholder="Название" id="card-name" name="name" minlength="2" maxlength="30" required>
             <span class="popup__error card-name-error">Вы пропустили это поле.</span>
-            <input class="popup__input" type="url" placeholder="Ссылка на картинку" id="image-link" required>
+            <input class="popup__input" type="url" placeholder="Ссылка на картинку" id="image-link" name="link" required>
             <span class="popup__error image-link-error">Введите адрес сайта.</span>
           </fieldset>
           <button class="popup__button popup__button_disabled" type="submit" disabled>Создать</button>
