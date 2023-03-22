@@ -77,7 +77,7 @@ const placePopup = new PopupWithForm({
     const newData = data;
 
     cardList.addItem(createCard(newData));
-    validatePlacePopup.disableSubmitButton();
+    
     
     placePopup.close(); 
   }
@@ -86,6 +86,7 @@ document
 .querySelector('.profile__add-button')
 .addEventListener('click', () => {
   placePopup.open();
+  validatePlacePopup.disableSubmitButton();
 })
 placePopup.setEventListeners();
 
