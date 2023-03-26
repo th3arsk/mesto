@@ -121,3 +121,33 @@ document
 })
 userInfoPopup.setEventListeners();
 
+const avatarForm = document.querySelector('.avatar-popup__form');
+const avatarPicture = document.querySelector('.profile__avatar');
+
+const validateAvatarPopup = new FormValidator( validationData, avatarForm );
+validateAvatarPopup.enableValidation();
+
+const avatarPopup = new PopupWithForm({
+  popupSelector: '.avatar-popup',
+  submitFunction: (data) => {
+    avatarPicture.src = data;
+    avatarPopup.close(); 
+  }
+});
+avatarPicture.addEventListener('click', () => {
+  avatarPopup.open();
+  validateAvatarPopup.disableSubmitButton();
+})
+avatarPopup.setEventListeners();
+
+const deletePopup = new PopupWithForm({
+  popupSelector: '.delete-popup',
+  submitFunction: () => {
+    deletePopup.close(); 
+  }
+});
+avatarPicture.addEventListener('click', () => {
+  deletePopup.open();
+})
+deletePopup.setEventListeners();
+

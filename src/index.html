@@ -64,6 +64,24 @@
           <button class="popup__close-button" type="button" title="Закрыть"></button>
         </div>
       </section>    
+      <section class="popup delete-popup">
+        <div class="delete-popup__container" method="post">
+          <p class="popup__heading">Вы уверены?</p>
+          <button class="popup__button" type="submit">Да</button>
+          <button class="popup__close-button" type="button" title="Закрыть"></button>
+        </div>
+      </section> 
+      <section class="popup avatar-popup">
+        <form name="avatar" class="popup__form avatar-popup__form" novalidate>
+          <p class="popup__heading">Обновить аватар</p>
+          <fieldset class="popup__fieldset">
+            <input class="popup__input" type="url" placeholder="Ссылка на картинку" id="avatar-link" name="name" required>
+            <span class="popup__error avatar-link-error">Введите ссылку на изображение.</span>
+          </fieldset>
+          <button class="popup__button popup__button_disabled" type="submit" disabled>Сохранить</button>
+          <button class="popup__close-button" type="button" title="Закрыть"></button>
+        </form>
+      </section>  
     </div>
   </main>
   <footer class="footer">
