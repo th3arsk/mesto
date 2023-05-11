@@ -4,35 +4,38 @@ import PopupWithImage from "../components/PopupWithImage.js";
 import Section from "../components/Section.js";
 import FormValidator from "../components/FormValidator.js";
 import UserInfo from "../components/UserInfo.js";
+import Api from "../components/Api.js";
+import PopupOfDelete from "../components/PopupOfDelete.js";
 
 import "./index.css";
 
-const initialCards = [
-  {
-    name: 'Архыз',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
-  },
-  {
-    name: 'Челябинская область',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
-  },
-  {
-    name: 'Иваново',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
-  },
-  {
-    name: 'Камчатка',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
-  },
-  {
-    name: 'Холмогорский район',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
-  },
-  {
-    name: 'Байкал',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
-  }
-];
+const profileName = document.querySelector('.profile__name');
+const profileAbout = document.querySelector('.profile__specialisation');
+const avatarPicture = document.querySelector('.profile__avatar');
+
+const api = new Api({
+  baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-61',
+  authorization: '653fa548-6834-4cc4-a376-28fd07f6118e'   
+});
+
+Promise.all([
+  api.getUserInfo(),
+  api.getInitialCards()
+])
+.then(([user, cards]) => {
+  console.log(user)
+  profileName.textContent = user.name;
+  profileAbout.textContent = user.about;
+  avatarPicture.src = user.avatar;
+
+  console.log(cards)
+  cardList.renderItems(cards.reverse())
+})
+.catch((err) => console.log(err));
+
+const cardList = new Section((item) => {
+  cardList.addItem(createCard(item));
+}, '.elements');
 
 const validationData = {
   formSelector: '.popup__form',
@@ -43,30 +46,49 @@ const validationData = {
   errorClass: 'popup__error_visible'
 };
 
+const nameInput = document.querySelector('#name');
+const jobInput = document.querySelector('#job');
+
 const placeForm = document.querySelector('.add-popup');
 const profileForm = document.querySelector('.profile-popup')
 
 const cardImage = new PopupWithImage('.picture-popup');
 cardImage.setEventListeners();
+const deletePopup = new PopupOfDelete({
+  popupSelector: '.delete-popup'
+});
+deletePopup.setEventListeners();
+const confimDelete = document.querySelector('#delete-card')
 
 function createCard(data) {
  const card = new Card({
     data: data,
     templateSelector: '.card-template',
+    profileId: '4fc248f9674153129b05c864',
     handleCardClick: () => {
       cardImage.open(data.name, data.link);
+    },
+    openDeletePopup: (button) => {
+      button.addEventListener('click', ()=>{
+        deletePopup.open();
+      })
+    },
+    closeDeletePopup: () => {
+      deletePopup.close();
+    },
+    handleCardDelete: (id) => {
+      api.deleteCard(id)
+    },
+    confimDelete: confimDelete,
+    putLike: (id) => {
+      api.putLike(id)
+    },
+    removeLike: (id) => {
+      api.removeLike(id)
     }
-  });
-  return card.generateCard();
+  })  
+  return card.generateCard(); 
 }
-
-const cardList = new Section({
-  items: initialCards,
-  renderer: (item) => {
-    cardList.addItem(createCard(item));
-  }
-}, '.elements');
-cardList.addItem(cardList.renderItems());
 
 const validatePlacePopup = new FormValidator( validationData, placeForm )
 validatePlacePopup.enableValidation();
@@ -76,10 +98,14 @@ const placePopup = new PopupWithForm({
   submitFunction: (data) => {
     const newData = data;
 
-    cardList.addItem(createCard(newData));
-    
-    
-    placePopup.close(); 
+    api.postCard(newData)
+    .then(api.getInitialCards())
+    .then(res => res.json())
+    .then((result) => {
+      cardList.addItem(createCard(result));
+    })
+    .catch((err) => console.log(err))
+    .finally(placePopup.close());  
   }
 });
 document
@@ -93,9 +119,6 @@ placePopup.setEventListeners();
 const validateProfilePopup = new FormValidator( validationData, profileForm );
 validateProfilePopup.enableValidation();
 
-const nameInput = document.querySelector('#name');
-const jobInput = document.querySelector('#job');
-
 const userInfoClass = new UserInfo({
   nameSelector: '.profile__name',
   jobSelector: '.profile__specialisation'
@@ -108,6 +131,12 @@ const userInfoPopup = new PopupWithForm({
       name: data.name,
       job: data.link
     })
+    
+    api.postUserInfo({
+      name: data.name,
+      about: data.link
+    })
+    .catch((err) => console.log(err));
 
     userInfoPopup.close(); 
   }
@@ -122,7 +151,7 @@ document
 userInfoPopup.setEventListeners();
 
 const avatarForm = document.querySelector('.avatar-popup__form');
-const avatarPicture = document.querySelector('.profile__avatar');
+const avatarButton = document.querySelector('.profile__avatar-container');
 
 const validateAvatarPopup = new FormValidator( validationData, avatarForm );
 validateAvatarPopup.enableValidation();
@@ -130,24 +159,21 @@ validateAvatarPopup.enableValidation();
 const avatarPopup = new PopupWithForm({
   popupSelector: '.avatar-popup',
   submitFunction: (data) => {
-    avatarPicture.src = data;
+    api.postUserAvatar(data.avatar);
+    avatarPicture.src = data.avatar;
+    
     avatarPopup.close(); 
   }
 });
-avatarPicture.addEventListener('click', () => {
+avatarButton.addEventListener('click', () => {
   avatarPopup.open();
   validateAvatarPopup.disableSubmitButton();
 })
 avatarPopup.setEventListeners();
 
-const deletePopup = new PopupWithForm({
-  popupSelector: '.delete-popup',
-  submitFunction: () => {
-    deletePopup.close(); 
-  }
-});
-avatarPicture.addEventListener('click', () => {
-  deletePopup.open();
-})
-deletePopup.setEventListeners();
+
+
+
+
+
 
