@@ -3,7 +3,6 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="./pages/index.css">
   <title>Mesto</title>
 </head>
 <body class="page">
@@ -67,11 +66,11 @@
         </div>
       </section>    
       <section class="popup delete-popup">
-        <div class="delete-popup__container" method="post">
+        <form class="delete-popup__container" method="post">
           <p class="popup__heading">Вы уверены?</p>
-          <button class="popup__button" type="button" id="delete-card">Да</button>
+          <button class="popup__button" type="submit" id="delete-card">Да</button>
           <button class="popup__close-button" type="button" title="Закрыть"></button>
-        </div>
+        </form>
       </section> 
       <section class="popup avatar-popup">
         <form name="avatar" class="popup__form avatar-popup__form" novalidate>

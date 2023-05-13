@@ -10,8 +10,7 @@ export default class Api {
   _getHeader() {
     return {
       'Content-Type': 'application/json',
-      authorization: this._autorization
-      
+      authorization: this._autorization 
     }
   }
 
@@ -47,7 +46,7 @@ export default class Api {
         about: about,
       })
     })
-    .then(this._renderLoading());
+    .then(this._getJson);
   }
 
   postUserAvatar(data) {
@@ -58,7 +57,7 @@ export default class Api {
         avatar: data,
       })
     })
-    .then(this._renderLoading());
+    .then(this._getJson);
   }
 
   postCard(data) {
@@ -70,7 +69,7 @@ export default class Api {
         link: data.link,
       })
     })
-    .then(this._renderLoading());
+    .then(this._getJson);
   }
 
   deleteCard(id) {
@@ -78,13 +77,15 @@ export default class Api {
       method: 'DELETE',
       headers: this._getHeader()
     })
+    .then(this._getJson);
   }
 
-  putLike(id) {
+  like(id) {
     return fetch(this._cardsUrl + '/' + id + '/likes', {
       method: 'PUT',
       headers: this._getHeader()
     })
+    .then(this._getJson);
   }
 
   removeLike(id) {
@@ -92,19 +93,6 @@ export default class Api {
       method: 'DELETE',
       headers: this._getHeader()
     })
-  }
-
-  _renderLoading() {
-    const popup = document.querySelector('.popup_opened')
-    const button = popup.querySelector('.popup__button');
-  
-    button.textContent = 'Сохранение...';
-    setTimeout(() => {
-      if ( popup.classList.contains('add-popup')) {
-        button.textContent = 'Создать';
-      } else {
-        button.textContent = 'Сохранить';
-      }
-    }, 1000);
+    .then(this._getJson);
   }
 }

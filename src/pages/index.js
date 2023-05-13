@@ -9,9 +9,9 @@ import PopupOfDelete from "../components/PopupOfDelete.js";
 
 import "./index.css";
 
-const profileName = document.querySelector('.profile__name');
-const profileAbout = document.querySelector('.profile__specialisation');
-const avatarPicture = document.querySelector('.profile__avatar');
+import {profileName, profileAbout,
+  avatarPicture, avatarForm, avatarButton,
+  validationData, nameInput, jobInput, placeForm, profileForm, renderLoading} from "../utils/constants.js";
 
 const api = new Api({
   baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-61',
@@ -31,34 +31,19 @@ Promise.all([
   console.log(cards)
   cardList.renderItems(cards.reverse())
 })
-.catch((err) => console.log(err));
+.catch(err => console.log(`Ошибка.....: ${err}`));
 
 const cardList = new Section((item) => {
   cardList.addItem(createCard(item));
 }, '.elements');
 
-const validationData = {
-  formSelector: '.popup__form',
-  inputSelector: '.popup__input',
-  submitButtonSelector: '.popup__button',
-  inactiveButtonClass: 'popup__button_disabled',
-  inputErrorClass: 'popup__input_type_error',
-  errorClass: 'popup__error_visible'
-};
-
-const nameInput = document.querySelector('#name');
-const jobInput = document.querySelector('#job');
-
-const placeForm = document.querySelector('.add-popup');
-const profileForm = document.querySelector('.profile-popup')
-
 const cardImage = new PopupWithImage('.picture-popup');
 cardImage.setEventListeners();
+
 const deletePopup = new PopupOfDelete({
-  popupSelector: '.delete-popup'
+  popupSelector: '.delete-popup',
 });
 deletePopup.setEventListeners();
-const confimDelete = document.querySelector('#delete-card')
 
 function createCard(data) {
  const card = new Card({
@@ -68,23 +53,29 @@ function createCard(data) {
     handleCardClick: () => {
       cardImage.open(data.name, data.link);
     },
-    openDeletePopup: (button) => {
-      button.addEventListener('click', ()=>{
-        deletePopup.open();
-      })
-    },
-    closeDeletePopup: () => {
-      deletePopup.close();
-    },
     handleCardDelete: (id) => {
-      api.deleteCard(id)
+      deletePopup.open()
+      deletePopup.submitFormMethod(() => {
+        api.deleteCard(id)
+        .then((renderLoading('.delete-popup', 'Удаление...')))
+        .then(card.deleteCard())
+        .then(deletePopup.close())
+        .catch(err => console.log(`Ошибка.....: ${err}`))
+      }); 
     },
-    confimDelete: confimDelete,
-    putLike: (id) => {
-      api.putLike(id)
+    handleCardLike: (id) => {
+      api.like(id)
+      .then(res => {
+        card.getLikeCount(res.likes)
+      })
+      .catch(err => console.log(`Ошибка.....: ${err}`))
     },
-    removeLike: (id) => {
+    handleCardRemoveLike: (id) => {
       api.removeLike(id)
+      .then(res => {
+        card.getLikeCount(res.likes);
+      })
+      .catch(err => console.log(`Ошибка.....: ${err}`))
     }
   })  
   return card.generateCard(); 
@@ -99,13 +90,12 @@ const placePopup = new PopupWithForm({
     const newData = data;
 
     api.postCard(newData)
-    .then(api.getInitialCards())
-    .then(res => res.json())
+    .then((renderLoading('.add-popup', 'Сохранение...')))
     .then((result) => {
       cardList.addItem(createCard(result));
     })
-    .catch((err) => console.log(err))
-    .finally(placePopup.close());  
+    .then(placePopup.close())
+    .catch(err => console.log(`Ошибка.....: ${err}`))   
   }
 });
 document
@@ -121,7 +111,8 @@ validateProfilePopup.enableValidation();
 
 const userInfoClass = new UserInfo({
   nameSelector: '.profile__name',
-  jobSelector: '.profile__specialisation'
+  jobSelector: '.profile__specialisation',
+  avatarSelector: '.profile__avatar'
 });
 
 const userInfoPopup = new PopupWithForm({
@@ -136,22 +127,20 @@ const userInfoPopup = new PopupWithForm({
       name: data.name,
       about: data.link
     })
-    .catch((err) => console.log(err));
-
-    userInfoPopup.close(); 
+    .then((renderLoading('.profile-popup', 'Сохранение...')))
+    .then(userInfoPopup.close())
+    .catch(err => console.log(`Ошибка.....: ${err}`)); 
   }
 });
 document
 .querySelector('.profile__edit-button')
 .addEventListener('click', () => {
   userInfoPopup.open();
-  nameInput.value = userInfoClass.getUserInfo().name;
-  jobInput.value = userInfoClass.getUserInfo().job;
+  const data = userInfoClass.getUserInfo();
+  nameInput.value = data.name;
+  jobInput.value = data.job;
 })
 userInfoPopup.setEventListeners();
-
-const avatarForm = document.querySelector('.avatar-popup__form');
-const avatarButton = document.querySelector('.profile__avatar-container');
 
 const validateAvatarPopup = new FormValidator( validationData, avatarForm );
 validateAvatarPopup.enableValidation();
@@ -159,10 +148,11 @@ validateAvatarPopup.enableValidation();
 const avatarPopup = new PopupWithForm({
   popupSelector: '.avatar-popup',
   submitFunction: (data) => {
-    api.postUserAvatar(data.avatar);
-    avatarPicture.src = data.avatar;
-    
-    avatarPopup.close(); 
+    api.postUserAvatar(data.avatar)
+    .then((renderLoading('.avatar-popup', 'Сохранение...')))
+    .then(userInfoClass.setUserAvatar().src = data.avatar)
+    .then(avatarPopup.close())
+    .catch(err => console.log(`Ошибка.....: ${err}`));
   }
 });
 avatarButton.addEventListener('click', () => {
