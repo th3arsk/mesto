@@ -72,20 +72,21 @@ function createCard(data) {
       }); 
     },
     handleCardLike: (id) => {
-      api.like(id)
-      .then(res => {
-        card.putLike()
-        card.updateLikesView(res.likes)
-      })
-      .catch(err => console.log(`Ошибка.....: ${err}`))
-    },
-    handleCardRemoveLike: (id) => {
-      api.removeLike(id)
-      .then(res => {
-        card.removeLike()
-        card.updateLikesView(res.likes);
-      })
-      .catch(err => console.log(`Ошибка.....: ${err}`))
+      if ( card.isLiked() ) {
+        api.removeLike(id)
+        .then(res => {
+          card.removeLike()
+          card.updateLikesCount(res.likes);
+        })
+        .catch(err => console.log(`Ошибка.....: ${err}`))
+      } else {
+        api.like(id)
+        .then(res => {
+          card.putLike()
+          card.updateLikesCount(res.likes);
+        })
+        .catch(err => console.log(`Ошибка.....: ${err}`))
+      }
     }
   })  
   return card.generateCard(); 
