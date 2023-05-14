@@ -9,8 +9,7 @@ import PopupOfDelete from "../components/PopupOfDelete.js";
 
 import "./index.css";
 
-import {profileName, profileAbout,
-  avatarPicture, avatarForm, avatarButton,
+import {avatarForm, avatarButton,
   validationData, nameInput, jobInput, placeForm, profileForm, renderLoading} from "../utils/constants.js";
 
 const api = new Api({
@@ -18,18 +17,24 @@ const api = new Api({
   authorization: '653fa548-6834-4cc4-a376-28fd07f6118e'   
 });
 
+let userId = null;
+
 Promise.all([
   api.getUserInfo(),
   api.getInitialCards()
 ])
 .then(([user, cards]) => {
-  console.log(user)
-  profileName.textContent = user.name;
-  profileAbout.textContent = user.about;
-  avatarPicture.src = user.avatar;
+  userId = user._id;
 
-  console.log(cards)
-  cardList.renderItems(cards.reverse())
+  console.log(user);
+  userInfoClass.setUserInfo({
+    name: user.name,
+    job: user.about,
+  });
+  userInfoClass.setUserAvatar(user.avatar);
+
+  console.log(cards);
+  cardList.renderItems(cards.reverse());
 })
 .catch(err => console.log(`Ошибка.....: ${err}`));
 
@@ -49,31 +54,36 @@ function createCard(data) {
  const card = new Card({
     data: data,
     templateSelector: '.card-template',
-    profileId: '4fc248f9674153129b05c864',
+    profileId: userId,
     handleCardClick: () => {
       cardImage.open(data.name, data.link);
     },
     handleCardDelete: (id) => {
       deletePopup.open()
-      deletePopup.submitFormMethod(() => {
+      deletePopup.setSubmitHandler(() => {
         api.deleteCard(id)
-        .then((renderLoading('.delete-popup', 'Удаление...')))
+        .then(renderLoading('.delete-popup', 'Удаление...'))
         .then(card.deleteCard())
         .then(deletePopup.close())
         .catch(err => console.log(`Ошибка.....: ${err}`))
+        .finally(() => {
+          renderLoading('.delete-popup', 'Да');
+        });
       }); 
     },
     handleCardLike: (id) => {
       api.like(id)
       .then(res => {
-        card.getLikeCount(res.likes)
+        card.putLike()
+        card.updateLikesView(res.likes)
       })
       .catch(err => console.log(`Ошибка.....: ${err}`))
     },
     handleCardRemoveLike: (id) => {
       api.removeLike(id)
       .then(res => {
-        card.getLikeCount(res.likes);
+        card.removeLike()
+        card.updateLikesView(res.likes);
       })
       .catch(err => console.log(`Ошибка.....: ${err}`))
     }
@@ -90,12 +100,15 @@ const placePopup = new PopupWithForm({
     const newData = data;
 
     api.postCard(newData)
-    .then((renderLoading('.add-popup', 'Сохранение...')))
+    .then(renderLoading('.add-popup', 'Сохранение...'))
     .then((result) => {
       cardList.addItem(createCard(result));
     })
     .then(placePopup.close())
-    .catch(err => console.log(`Ошибка.....: ${err}`))   
+    .catch(err => console.log(`Ошибка.....: ${err}`))
+    .finally(() => {
+      renderLoading('.add-popup', 'Создать');
+    });   
   }
 });
 document
@@ -118,18 +131,17 @@ const userInfoClass = new UserInfo({
 const userInfoPopup = new PopupWithForm({
   popupSelector: '.profile-popup',
   submitFunction: (data) => {
-    userInfoClass.setUserInfo({
-      name: data.name,
-      job: data.link
-    })
-    
     api.postUserInfo({
       name: data.name,
       about: data.link
     })
-    .then((renderLoading('.profile-popup', 'Сохранение...')))
+    .then(renderLoading('.profile-popup', 'Сохранение...'))
+    .then(userInfoClass.setUserInfo({name: data.name, job: data.link}))
     .then(userInfoPopup.close())
-    .catch(err => console.log(`Ошибка.....: ${err}`)); 
+    .catch(err => console.log(`Ошибка.....: ${err}`))
+    .finally(() => {
+      renderLoading('.profile-popup', 'Сохранить');
+    }); 
   }
 });
 document
@@ -149,10 +161,13 @@ const avatarPopup = new PopupWithForm({
   popupSelector: '.avatar-popup',
   submitFunction: (data) => {
     api.postUserAvatar(data.avatar)
-    .then((renderLoading('.avatar-popup', 'Сохранение...')))
-    .then(userInfoClass.setUserAvatar().src = data.avatar)
+    .then(renderLoading('.avatar-popup', 'Сохранение...'))
+    .then(userInfoClass.setUserAvatar(data.avatar))
     .then(avatarPopup.close())
-    .catch(err => console.log(`Ошибка.....: ${err}`));
+    .catch(err => console.log(`Ошибка.....: ${err}`))
+    .finally(() => {
+      renderLoading('.avatar-popup', 'Сохранить');
+    });
   }
 });
 avatarButton.addEventListener('click', () => {
@@ -160,10 +175,3 @@ avatarButton.addEventListener('click', () => {
   validateAvatarPopup.disableSubmitButton();
 })
 avatarPopup.setEventListeners();
-
-
-
-
-
-
-

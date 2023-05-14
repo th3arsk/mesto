@@ -38,18 +38,18 @@ export default class Card {
     }
   }
 
-  _putLike() {
+  putLike() {
     this._like.classList.add('like-button_active');
-    this._apiLike(this._cardId);
+    
   }
 
-  _removeLike() {
+  removeLike() {
     this._like.classList.remove('like-button_active');
-    this._apiRemoveLike(this._cardId);
+    
   }
 
-  getLikeCount(res) {
-    this._element.querySelector('.element__like-count').textContent = res.length;
+  updateLikesView(likes) {
+    this._element.querySelector('.element__like-count').textContent = likes.length;
   }
 
   _isLiked() {
@@ -62,17 +62,17 @@ export default class Card {
 
   _checkLikeIcon() {
     if ( this._isLiked() ) {
-      this._like.classList.add('like-button_active');
+      this.putLike();
     } else {
-      this._like.classList.remove('like-button_active');
+      this.removeLike();
     }
   }
 
   _handleLLike() {
     if ( this._isLiked() ) {
-      this._removeLike();
+      this._apiRemoveLike(this._cardId);  
     } else {
-      this._putLike();
+      this._apiLike(this._cardId);
     }
   }
 
@@ -96,7 +96,8 @@ export default class Card {
     this._element = this._getTemplate();
     this._setEventListeners();
     this._removeIcon();
-    this.getLikeCount(this._likes);
+
+    this.updateLikesView(this._likes);
     this._checkLikeIcon();
 
     this._picture = this._element.querySelector('.element__picture');

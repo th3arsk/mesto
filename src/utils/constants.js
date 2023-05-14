@@ -1,10 +1,5 @@
-export {profileName, profileAbout,
-     avatarPicture, avatarForm, avatarButton,
+export {avatarForm, avatarButton,
      validationData, nameInput, jobInput, placeForm, profileForm, renderLoading}
-
-const profileName = document.querySelector('.profile__name');
-const profileAbout = document.querySelector('.profile__specialisation');
-const avatarPicture = document.querySelector('.profile__avatar');
 
 const avatarForm = document.querySelector('.avatar-popup__form');
 const avatarButton = document.querySelector('.profile__avatar-container');
@@ -28,9 +23,6 @@ const renderLoading = (popupSelector, text) => {
   const popup = document.querySelector(popupSelector)
   const currentActiveButton = popup.querySelector(`.popup__button`);
 
-  const currentText = currentActiveButton.textContent;
   currentActiveButton.textContent = text;
-  setTimeout(()=>{
-    currentActiveButton.textContent = currentText;
-  }, 1000)
+
 }; 

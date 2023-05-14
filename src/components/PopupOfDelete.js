@@ -7,12 +7,6 @@ export default class PopupOfDelete extends Popup {
     this._apiDelete = apiDelete;
   } 
 
-  openConfim(button) {
-    button.addEventListener('click', () => {
-      this.open();
-    })
-  }
-
   _confimDelete() {
     this._form.addEventListener('submit', (evt) => {
       evt.preventDefault();
@@ -21,7 +15,7 @@ export default class PopupOfDelete extends Popup {
     })
   }
 
-  submitFormMethod(method) {
+  setSubmitHandler(method) {
     this._method = method;
   }
 
