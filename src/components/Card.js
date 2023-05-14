@@ -37,39 +37,35 @@ export default class Card {
     }
   }
 
-  putLike() {
+  _putLike() {
     this._like.classList.add('like-button_active');
     
   }
 
-  removeLike() {
+  _removeLike() {
     this._like.classList.remove('like-button_active');
     
   }
 
-  isLiked() {
-    if (this._likes.some( like => like._id === this._profileId )) {
+  isLiked(likes) {
+    if (likes.some( (like) => like._id === this._profileId )) {
       return true
     } else {
       return false
     }
   }
 
-  _checkLikeIcon() {
-    if ( this.isLiked() ) {
-      this.putLike();
+  _checkLikeIcon(likes) {
+    if ( this.isLiked(likes) ) {
+      this._putLike();
     } else {
-      this.removeLike();
+      this._removeLike();
     }
   }
 
-  updateLikesCount(likes) {
-    this._element.querySelector('.element__like-count').textContent = likes.length;
-  }
-
   updateLikesView(likes) {
-    this.updateLikesCount(likes);
-    this._checkLikeIcon();
+    this._element.querySelector('.element__like-count').textContent = likes.length;
+    this._checkLikeIcon(likes);
   }
 
   _setEventListeners () {

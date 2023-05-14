@@ -72,18 +72,16 @@ function createCard(data) {
       }); 
     },
     handleCardLike: (id) => {
-      if ( card.isLiked() ) {
+      if ( card.isLiked(card._likes) ) {
         api.removeLike(id)
         .then(res => {
-          card.removeLike()
-          card.updateLikesCount(res.likes);
+          card.updateLikesView(res.likes);
         })
         .catch(err => console.log(`Ошибка.....: ${err}`))
       } else {
         api.like(id)
         .then(res => {
-          card.putLike()
-          card.updateLikesCount(res.likes);
+          card.updateLikesView(res.likes);
         })
         .catch(err => console.log(`Ошибка.....: ${err}`))
       }
