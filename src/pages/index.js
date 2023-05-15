@@ -61,8 +61,8 @@ function createCard(data) {
     handleCardDelete: (id) => {
       deletePopup.open()
       deletePopup.setSubmitHandler(() => {
+        renderLoading('.delete-popup', 'Удаление...');
         api.deleteCard(id)
-        .then(renderLoading('.delete-popup', 'Удаление...'))
         .then(card.deleteCard())
         .then(deletePopup.close())
         .catch(err => console.log(`Ошибка.....: ${err}`))
@@ -98,8 +98,8 @@ const placePopup = new PopupWithForm({
   submitFunction: (data) => {
     const newData = data;
 
+    renderLoading('.add-popup', 'Сохранение...');
     api.postCard(newData)
-    .then(renderLoading('.add-popup', 'Сохранение...'))
     .then((result) => {
       cardList.addItem(createCard(result));
     })
@@ -130,11 +130,11 @@ const userInfoClass = new UserInfo({
 const userInfoPopup = new PopupWithForm({
   popupSelector: '.profile-popup',
   submitFunction: (data) => {
+    renderLoading('.profile-popup', 'Сохранение...');
     api.postUserInfo({
       name: data.name,
       about: data.link
     })
-    .then(renderLoading('.profile-popup', 'Сохранение...'))
     .then(userInfoClass.setUserInfo({name: data.name, job: data.link}))
     .then(userInfoPopup.close())
     .catch(err => console.log(`Ошибка.....: ${err}`))
@@ -159,8 +159,8 @@ validateAvatarPopup.enableValidation();
 const avatarPopup = new PopupWithForm({
   popupSelector: '.avatar-popup',
   submitFunction: (data) => {
+    renderLoading('.avatar-popup', 'Сохранение...');
     api.postUserAvatar(data.avatar)
-    .then(renderLoading('.avatar-popup', 'Сохранение...'))
     .then(userInfoClass.setUserAvatar(data.avatar))
     .then(avatarPopup.close())
     .catch(err => console.log(`Ошибка.....: ${err}`))
